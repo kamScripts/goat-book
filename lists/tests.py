@@ -9,8 +9,12 @@ class HomePageTests(TestCase):
 #        self.assertIn('<title>To-Do Lists</title>', html)
 #        self.assertTrue(html.startswith('<html>'))
 #        self.assertTrue(html.endswith('</html>'))
-    def test_home_page_correct_html(self):
+    def test_uses_home_template(self):
         response = self.client.get('/')
         self.assertContains(response, '<title>To-Do Lists</title>')
-        self.assertContains(response, '<html>')
+        self.assertContains(response, '<html lang="en">')
         self.assertContains(response, '</html>')
+        self.assertTemplateUsed(response, 'home.html')
+    def test_renders_homepage_content(self):
+        response = self.client.get('/')
+        self.assertContains(response, 'To-Do')
